@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banksy Private Sale | Wise Premium</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #f5f0e8;
+            --gold-accent: #c9a84c;
+            --card-bg: rgba(15, 15, 15, 0.65);
+            --nav-bg: rgba(5, 5, 5, 0.75);
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: linear-gradient(rgba(5, 5, 5, 0.88), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* Typography */
+        h1, h2, h3, .serif {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        .gold-text {
+            color: var(--gold-accent);
+        }
+
+        .small-caps {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-placeholder {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img-placeholder {
+            width: 220px;
+            height: 50px;
+            background: #111;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+
+        .logo-img-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: all 0.3s ease;
+            font-weight: 300;
+            position: relative;
+            display: inline-block;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 50%;
+            background-color: var(--gold-accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav ul li a:hover {
+            color: var(--gold-accent);
+            transform: translateY(-2px);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            background-color: var(--gold-accent);
+            border: 1px solid var(--gold-accent);
+            padding: 0.7rem 1.8rem;
+            color: var(--bg-color) !important;
+            transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1) !important;
+            font-weight: 500 !important;
+        }
+
+        .login-btn:hover {
+            background-color: transparent;
+            color: var(--gold-accent) !important;
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+            background-color: #050505;
+            overflow: hidden;
+        }
+
+        .hero-bg-placeholder {
+            position: absolute;
+            top: -15%;
+            left: 0;
+            width: 100%;
+            height: 130%;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            border: 1px dashed #222;
+            font-size: 0.8rem;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            will-change: transform;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero-stagger h1,
+        .hero-stagger p,
+        .hero-stagger .gold-rule {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.2, 0, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .hero-stagger.active h1 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.1s;
+        }
+
+        .hero-stagger.active p {
+            opacity: 0.8;
+            transform: translateY(0);
+            transition-delay: 0.5s;
+        }
+
+        .hero-stagger.active .gold-rule {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.9s;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .gold-rule {
+            width: 120px;
+            height: 1px;
+            background-color: var(--gold-accent);
+            margin: 2rem auto 0;
+        }
+
+        /* Intro Section */
+        .intro {
+            padding: 10rem 2rem;
+            text-align: center;
+            background: linear-gradient(to bottom, #0a0a0a, #0d0d0d);
+        }
+
+        .intro-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro p {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            line-height: 1.9;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.85;
+        }
+
+        .intro .email-link {
+            color: var(--gold-accent);
+            text-decoration: none;
+            font-style: italic;
+            border-bottom: 1px solid var(--gold-accent);
+            transition: all 0.3s ease;
+            padding-bottom: 2px;
+        }
+
+        .intro .email-link:hover {
+            color: white;
+            border-bottom-color: white;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 4rem 2rem 10rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6rem;
+        }
+
+        .artwork-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            padding: 3rem;
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .artwork-card::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(201, 168, 76, 0.05);
+            pointer-events: none;
+            transform: scale(0.97);
+            opacity: 0.5;
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--gold-accent);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(201, 168, 76, 0.2), inset 0 0 20px rgba(201, 168, 76, 0.05);
+        }
+
+        .artwork-card:hover::before {
+            border-color: rgba(201, 168, 76, 0.4);
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .artwork-img-container img {
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .artwork-card:hover .artwork-img-container img {
+            transform: scale(1.03);
+        }
+
+        .artwork-img-container {
+            aspect-ratio: 3/4;
+            background-color: #050505;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #1a1a1a;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .artwork-img-container.landscape {
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .artwork-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border: 1px dashed #333;
+            transition: all 0.5s ease;
+        }
+
+        .artwork-card:hover .artwork-placeholder {
+            color: var(--gold-accent);
+            border-color: var(--gold-accent);
+        }
+
+        .artwork-info {
+            text-align: center;
+        }
+
+        .artwork-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .artwork-info .artist {
+            color: var(--gold-accent);
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.1em;
+            font-style: italic;
+        }
+
+        .artwork-description {
+            text-align: left;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        .artwork-details {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0 0 0;
+            border-top: 1px solid rgba(201, 168, 76, 0.2);
+            padding-top: 1rem;
+        }
+
+        .artwork-details li {
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .artwork-details strong {
+            color: var(--gold-accent);
+            font-weight: 500;
+        }
+
+        .artwork-info .valuation {
+            margin-bottom: 2.5rem;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+
+        .enquire-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--gold-accent);
+            color: var(--gold-accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .enquire-btn:hover {
+            background-color: var(--gold-accent);
+            color: var(--bg-color);
+            letter-spacing: 0.25em;
+        }
+
+        /* CTA Section */
+        .cta-strip {
+            background-color: #050505;
+            padding: 8rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+            position: relative;
+        }
+
+        .cta-strip::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-strip p {
+            font-family: var(--font-serif);
+            font-size: 1.7rem;
+            margin-bottom: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .register-btn {
+            display: inline-block;
+            background-color: var(--gold-accent);
+            color: var(--bg-color);
+            padding: 1.4rem 4rem;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .register-btn:hover {
+            background-color: #e0c06e;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Additional Artworks Section */
+        .additional-artworks {
+            padding: 2rem 2rem 8rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .additional-artworks-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .additional-artworks-header h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .additional-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .additional-artwork-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(201, 168, 76, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.6s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .additional-artwork-card::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.05);
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        .additional-artwork-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold-accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(201, 168, 76, 0.15), inset 0 0 15px rgba(201, 168, 76, 0.05);
+        }
+
+        .additional-artwork-card:hover::before {
+            border-color: rgba(201, 168, 76, 0.4);
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+        }
+
+        .additional-img-container {
+            aspect-ratio: 1;
+            background-color: #050505;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .additional-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+        }
+
+        .additional-artwork-card:hover .additional-img-container img {
+            transform: scale(1.05);
+        }
+
+        .additional-info {
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .additional-info h4 {
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .additional-info p {
+            font-size: 0.75rem;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Footer */
+        footer {
+            padding: 8rem 2rem 4rem;
+            background-color: var(--bg-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 4rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+            margin-bottom: 5rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 50%;
+            background-color: var(--gold-accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--gold-accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-legal a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.75rem;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-legal a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 50%;
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .footer-legal a:hover {
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+
+        .footer-legal a:hover::after {
+            width: 100%;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.2;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.2, 0, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            
+            nav ul {
+                display: none; /* In a real app, you'd have a mobile menu */
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-container {
+                padding: 1rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .footer-legal {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body id="home">
+
+    <header id="main-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo-placeholder">
+                <img src="https://i.imghippo.com/files/Twe9225Xg.png" style="height: 50px; width: auto;" referrerPolicy="no-referrer">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="collection.html">Gallery</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg-placeholder" style="background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=1920'); background-size: cover; background-position: center;">
+        </div>
+        <div class="hero-content hero-stagger">
+            <h1>Banksy Private Sale</h1>
+            <p class="serif italic" style="font-size: 1.5rem; margin-bottom: 2rem;">Discreet Access for Qualified Collectors</p>
+            <div class="gold-rule"></div>
+        </div>
+    </section>
+
+    <section class="intro">
+        <div class="intro-container reveal">
+            <p>
+                Wise Premium connects discerning members with exclusive investment opportunities and a curated luxury lifestyle, from fine dining and private clubs to luxury yachts and bespoke travel experiences.
+            </p>
+            <p>
+                We are honoured to have been appointed to host the sale of privately owned Banksy masterpieces, offered discreetly to qualified buyers through our platform. These iconic works are accompanied by full provenance and authentication from recognised experts, and can be viewed by appointment only in secure, private settings arranged for interested collectors.
+            </p>
+            <p>
+                For further information and to register your interest in acquiring one of these Banksy masterpieces, please contact our lead curator, Miss Baytar, who will provide personalised guidance on viewings, pricing, and the transaction process.
+            </p>
+            <p style="margin-top: 3rem;">
+                <span class="small-caps">Inquiries</span><br>
+                <a href="mailto:art@wisepremium.com" class="email-link">art@wisepremium.com</a>
+            </p>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="gallery-grid">
+            <!-- Artwork 1 -->
+            <div class="artwork-card reveal">
+                <div class="artwork-img-container landscape">
+                    <img src="https://i.imghippo.com/files/AJcd5371GM.png" alt="Love Plane by Banksy" style="width: 100%; height: 100%; object-fit: contain;" referrerPolicy="no-referrer">
+                </div>
+                <div class="artwork-info">
+                    <h3>Love Plane</h3>
+                    <p class="artist">Banksy</p>
+                    <div class="artwork-description">
+                        <p>Originally adorning the side of Norwich House opposite the Liverpool War Museum, Love Plane is a 15-feet tall two-colour spray stencil of a biplane trailing a heart-shaped smoke trail — created using a fire extinguisher filled with white paint. A technically ambitious work showcasing Banksy's craft at its most precise, it was carefully salvaged and restored for permanent display at Baltic House, the world's first dedicated street art museum. Now offered privately for the first time, the work is accompanied by full provenance documentation and authentication from recognised experts.</p>
+                        <ul class="artwork-details">
+                            <li><strong>Medium:</strong> Spray paint on concrete</li>
+                            <li><strong>Dimensions:</strong> 15 feet tall (approx. 457 cm)</li>
+                        </ul>
+                    </div>
+                    <p class="valuation small-caps">Estimated Value: USD 3,000,000 – 9,000,000</p>
+                    <a href="mailto:art@wisepremium.com?subject=Enquiry: Love Plane by Banksy" class="enquire-btn">Register Interest</a>
+                </div>
+            </div>
+
+            <!-- Artwork 2 -->
+            <div class="artwork-card reveal">
+                <div class="artwork-img-container landscape">
+                    <img src="https://i.imghippo.com/files/Apf4498Kmg.png" alt="White House Rat by Banksy" style="width: 100%; height: 100%; object-fit: contain;" referrerPolicy="no-referrer">
+                </div>
+                <div class="artwork-info">
+                    <h3>White House Rat</h3>
+                    <p class="artist">Banksy, 2004</p>
+                    <div class="artwork-description">
+                        <p>Created during the Liverpool Biennial in 2004, White House Rat is a monumental spray paint mural spanning 300 × 400 cm on the façade of the Whitehouse Pub — a Grade II-listed building in Liverpool's historic Chinatown. The work depicts a giant stencilled rat clutching a marker pen, drawing direct lineage from French street artist Blek le Rat, and channelling Banksy's signature themes of rebellion and socio-political critique. Salvaged in 2011, this rare work is accompanied by full provenance documentation and authentication from recognised experts.</p>
+                        <ul class="artwork-details">
+                            <li><strong>Medium:</strong> Spray paint on concrete</li>
+                            <li><strong>Dimensions:</strong> 300 × 400 cm</li>
+                        </ul>
+                    </div>
+                    <p class="valuation small-caps">Estimated Value: USD 3,000,000 – 9,000,000</p>
+                    <a href="mailto:art@wisepremium.com?subject=Enquiry: White House Rat by Banksy" class="enquire-btn">Register Interest</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-strip" id="contact">
+        <div class="reveal">
+            <p>To arrange a private viewing or register your interest, contact Miss Baytar at art@wisepremium.com</p>
+            <a href="mailto:art@wisepremium.com" class="register-btn">Register Your Interest</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="https://i.imghippo.com/files/Twe9225Xg.png" style="height: 80px; width: auto; opacity: 0.8;" referrerPolicy="no-referrer">
+            </div>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="collection.html">Gallery</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+            </div>
+            <p class="copyright">&copy; 2026 WISE PREMIUM. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Optimized Scroll Handling with requestAnimationFrame
+        let ticking = false;
+
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    handleScrollEffects();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        function handleScrollEffects() {
+            var scrolled = window.scrollY;
+            var windowHeight = window.innerHeight;
+
+            // 1. Header Effect
+            var header = document.getElementById("main-header");
+            if (scrolled > 50) {
+                header.style.padding = "0.5rem 0";
+                header.style.backgroundColor = "rgba(10, 10, 10, 0.98)";
+            } else {
+                header.style.padding = "0";
+                header.style.backgroundColor = "rgba(10, 10, 10, 0.95)";
+            }
+
+            // 2. Parallax Effect (Hardware Accelerated)
+            var heroBg = document.querySelector('.hero-bg-placeholder');
+            if (heroBg && scrolled < windowHeight) {
+                heroBg.style.transform = 'translate3d(0, ' + (scrolled * 0.4) + 'px, 0)';
+            }
+        }
+
+        // Use passive event listener for better scroll performance
+        window.addEventListener("scroll", onScroll, { passive: true });
+        
+        // Intersection Observer for Reveal Animations
+        document.addEventListener("DOMContentLoaded", function() {
+            handleScrollEffects(); // Initial check for header/parallax
+
+            // Trigger hero stagger animation
+            setTimeout(() => {
+                const heroStagger = document.querySelector('.hero-stagger');
+                if (heroStagger) heroStagger.classList.add('active');
+            }, 100);
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
